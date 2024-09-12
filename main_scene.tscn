@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://dsvdxhxkj00kw"]
+
+[ext_resource type="Texture2D" uid="uid://cckw8tchkuv5a" path="res://Experimental Assests/flappy dude i guess.png" id="1_2xghm"]
+[ext_resource type="Texture2D" uid="uid://bqdjyt8nqospl" path="res://Experimental Assests/Static.png" id="2_le83k"]
+[ext_resource type="PackedScene" uid="uid://wmacqfuff8bo" path="res://Experimental Assests/NPC_thing.blend" id="3_f51yt"]
+[ext_resource type="Script" path="res://Experimental Assests/CameraController.gd" id="4_0lc7c"]
+
+[sub_resource type="Environment" id="Environment_em7oi"]
+background_mode = 1
+background_color = Color(0.588235, 0.588235, 0.623529, 1)
+background_energy_multiplier = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qnmx5"]
+albedo_texture = ExtResource("1_2xghm")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dvlnp"]
+albedo_texture = ExtResource("2_le83k")
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c6mit"]
+radius = 0.600949
+height = 2.82953
+
+[node name="Main Scene" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_em7oi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0208726, 0.999782, 0, -0.999782, 0.0208726, 0, 13.6031, 0)
+light_energy = 2.663
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.77356, 1.00775, 41.8249)
+material_override = SubResource("StandardMaterial3D_qnmx5")
+use_collision = true
+size = Vector3(119.695, 3.0155, 146.026)
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.35236, 3.57437, 0)
+material_override = SubResource("StandardMaterial3D_dvlnp")
+use_collision = true
+size = Vector3(40.5145, 2.1665, 1)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+
+[node name="PlayMesh" type="Node3D" parent="Player"]
+
+[node name="NPC_thing" parent="Player/PlayMesh" instance=ExtResource("3_f51yt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64225, 6.46168)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.2439, 6.48767)
+shape = SubResource("CapsuleShape3D_c6mit")
+
+[node name="CamRoot" type="Node3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00524944, 6.03935, 6.38743)
+script = ExtResource("4_0lc7c")
+
+[node name="CamYaw" type="Node3D" parent="Player/CamRoot"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.209872, 0.0134735, 0.0196443)
+
+[node name="CamPitch" type="Node3D" parent="Player/CamRoot/CamYaw"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0521097, -0.177154, 0.207088)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Player/CamRoot/CamYaw/CamPitch"]
+transform = Transform3D(1, 6.94277e-09, 2.76124e-10, -6.94277e-09, 0.996842, 0.079416, 2.76117e-10, -0.079416, 0.996842, -7.07805e-08, 0.311801, 0.807317)
+spring_length = 3.0
+
+[node name="Camera3D" type="Camera3D" parent="Player/CamRoot/CamYaw/CamPitch/SpringArm3D"]
+transform = Transform3D(1, 3.10862e-15, 7.10543e-15, 0, 0.999999, -7.45058e-09, 0, 7.45058e-09, 0.999999, -2.16998e-07, 0.0546904, 2.47572)
