@@ -8,7 +8,7 @@ const SENSITIVITY = 0.003
 
 #Bob variables
 const BOB_FREQ = 2.0
-const BOB_AMP = 0.08
+const BOB_AMP = 0.05
 var t_bob = 0.0
 
 #fov variables
