@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cajxsmm1p1c8w"]
+[gd_scene load_steps=14 format=3 uid="uid://cajxsmm1p1c8w"]
 
 [ext_resource type="Texture2D" uid="uid://bqdjyt8nqospl" path="res://Experimental Assests/Static.png" id="1_kxdo3"]
 [ext_resource type="Script" path="res://Movement.gd" id="1_sliht"]
+[ext_resource type="Shader" path="res://psx_shader.gdshader" id="2_n1362"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nomeo"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -25,10 +26,22 @@ albedo_color = Color(0, 0, 0.0862745, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scmyu"]
 albedo_color = Color(1, 0.286275, 1, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s3qt5"]
-albedo_texture = ExtResource("1_kxdo3")
-uv1_triplanar = true
-uv1_world_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojkui"]
+render_priority = 0
+shader = ExtResource("2_n1362")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.598
+shader_parameter/resolution = Vector2i(320, 240)
+shader_parameter/albedo = ExtResource("1_kxdo3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bw4n"]
+render_priority = 0
+shader = ExtResource("2_n1362")
+shader_parameter/affine_mapping = false
+shader_parameter/alpha_scissor = 0.5
+shader_parameter/jitter = 0.25
+shader_parameter/resolution = Vector2i(320, 240)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cr41o"]
 
@@ -75,10 +88,11 @@ use_collision = true
 size = Vector3(4.28319, 2.58728, 5.9491)
 
 [node name="Wall5" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38327, 1.50228, -7.65486)
-material_override = SubResource("StandardMaterial3D_s3qt5")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33835, 2.48485, -7.65486)
+material_override = SubResource("ShaderMaterial_ojkui")
 use_collision = true
-size = Vector3(13.8916, 2.58728, 2.51559)
+size = Vector3(7.80176, 4.55243, 2.51559)
+material = SubResource("ShaderMaterial_5bw4n")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.894885, 0)
