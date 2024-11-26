@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://c78pi5kmu85jt"]
+
+[ext_resource type="PackedScene" uid="uid://dkwmf4ckf3bo7" path="res://FPOV_Assests/Rifle.glb" id="1_6qsam"]
+[ext_resource type="Texture2D" uid="uid://cow5qf1cdrxt2" path="res://FPOV_Assests/Rifle_Atlas_Pirate.png" id="2_4j7pd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_edvhe"]
+albedo_color = Color(0.317647, 0.317647, 0.317647, 1)
+albedo_texture = ExtResource("2_4j7pd")
+metallic = 0.16
+metallic_specular = 0.3
+disable_receive_shadows = true
+
+[sub_resource type="Animation" id="Animation_c6l7w"]
+resource_name = "shoot"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2wyb8"]
+_data = {
+"shoot": SubResource("Animation_c6l7w")
+}
+
+[node name="Root Scene" instance=ExtResource("1_6qsam")]
+
+[node name="Weapon_Rifle" parent="RootNode" index="0"]
+cast_shadow = 0
+surface_material_override/0 = SubResource("StandardMaterial3D_edvhe")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RootNode" index="1"]
+root_node = NodePath("../Weapon_Rifle")
+libraries = {
+"": SubResource("AnimationLibrary_2wyb8")
+}
